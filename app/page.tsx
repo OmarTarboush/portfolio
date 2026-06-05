@@ -405,11 +405,6 @@ export default function HomePage() {
                 <ContactRow label={text.education} value={profile.education[locale]} />
                 <ContactRow label={text.languages} value={profile.languages[locale]} />
                 <ContactRow label="LinkedIn" value={profile.linkedin} />
-                <ContactRow
-                  label={text.portfolio}
-                  value="github.com/OmarTarboush/portfolio"
-                  href={profile.portfolio}
-                />
               </dl>
             </Reveal>
           </div>
@@ -594,7 +589,7 @@ function ProjectCard({
             </div>
           </div>
 
-          <div className="grid gap-4 sm:grid-cols-3">
+          <div className="grid grid-cols-3 gap-2 sm:gap-4">
             {project.screenshots.map((screenshot, screenshotIndex) => (
               <motion.button
                 key={screenshot}
@@ -606,7 +601,7 @@ function ProjectCard({
                     project: project.name,
                   })
                 }
-                className={`group relative min-h-[390px] overflow-hidden rounded-[28px] border border-border bg-background p-3 text-left transition duration-300 hover:-translate-y-2 hover:border-accent focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-accent ${
+                className={`group relative min-h-[180px] overflow-hidden rounded-[18px] border border-border bg-background p-1.5 text-left transition duration-300 hover:-translate-y-2 hover:border-accent focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-accent sm:min-h-[390px] sm:rounded-[28px] sm:p-3 ${
                   screenshotIndex === 1
                     ? "sm:mt-8"
                     : screenshotIndex === 2
@@ -624,9 +619,9 @@ function ProjectCard({
                   alt={`${project.name} screenshot ${screenshotIndex + 1}`}
                   width={420}
                   height={760}
-                  className="h-full max-h-[620px] w-full rounded-[20px] object-cover object-top"
+                  className="h-full max-h-[250px] w-full rounded-[14px] object-cover object-top sm:max-h-[620px] sm:rounded-[20px]"
                 />
-                <span className="absolute inset-x-6 bottom-6 translate-y-3 rounded-full bg-background/92 px-4 py-3 text-center text-xs font-black opacity-0 shadow-xl transition duration-300 group-hover:translate-y-0 group-hover:opacity-100">
+                <span className="absolute inset-x-2 bottom-2 translate-y-3 rounded-full bg-background/92 px-2 py-2 text-center text-[10px] font-black opacity-0 shadow-xl transition duration-300 group-hover:translate-y-0 group-hover:opacity-100 sm:inset-x-6 sm:bottom-6 sm:px-4 sm:py-3 sm:text-xs">
                   {text.openImage}
                 </span>
               </motion.button>
