@@ -9,7 +9,7 @@ from docx.shared import Inches, Pt, RGBColor
 
 
 OUTPUT = "public/Omar_Tarboush_CV.docx"
-PORTFOLIO_URL = "https://github.com/OmarTarboush/portfolio"
+PORTFOLIO_URL = "https://omartarboush.github.io/portfolio/"
 
 INK = RGBColor(17, 24, 39)
 MUTED = RGBColor(82, 92, 108)

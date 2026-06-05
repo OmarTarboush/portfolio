@@ -124,6 +124,11 @@ const copy = {
 const whatsappHref = "https://wa.me/963941717409";
 const gmailHref =
   "https://mail.google.com/mail/?view=cm&fs=1&to=omartarboush191@gmail.com";
+const siteBasePath = process.env.NEXT_PUBLIC_BASE_PATH ?? "";
+
+function publicAsset(src: string) {
+  return src.startsWith("/") ? `${siteBasePath}${src}` : src;
+}
 
 export default function HomePage() {
   const [locale, setLocale] = useState<Locale>("en");
@@ -205,7 +210,10 @@ export default function HomePage() {
               <Languages size={18} />
               <span>{text.langLabel}</span>
             </button>
-            <a href="/Omar_Tarboush_CV.docx" className="button-accent min-h-11">
+            <a
+              href={`${siteBasePath}/Omar_Tarboush_CV.docx`}
+              className="button-accent min-h-11"
+            >
               <Download size={18} />
               <span className="hidden sm:inline">{text.downloadCv}</span>
               <span className="sm:hidden">CV</span>
@@ -450,7 +458,7 @@ function HeroBackground({
           }}
         >
           <Image
-            src={project.screenshots[0]}
+            src={publicAsset(project.screenshots[0])}
             alt=""
             width={220}
             height={390}
@@ -486,7 +494,7 @@ function HeroAppWall({
               {projects.map((project) => (
                 <Image
                   key={project.name}
-                  src={project.icon}
+                  src={publicAsset(project.icon)}
                   alt={`${project.name} icon`}
                   width={48}
                   height={48}
@@ -507,7 +515,7 @@ function HeroAppWall({
                 transition={{ duration: 0.55, delay: index * 0.08 }}
               >
                 <Image
-                  src={project.screenshots[0]}
+                  src={publicAsset(project.screenshots[0])}
                   alt={`${project.name} ${project.role[locale]}`}
                   width={333}
                   height={592}
@@ -516,7 +524,7 @@ function HeroAppWall({
                 />
                 <div className="relative z-10 max-w-[52%]">
                   <Image
-                    src={project.icon}
+                    src={publicAsset(project.icon)}
                     alt={`${project.name} icon`}
                     width={56}
                     height={56}
@@ -555,7 +563,7 @@ function ProjectCard({
           <div className="flex min-w-0 flex-col">
             <div className="flex items-start gap-4">
               <Image
-                src={project.icon}
+                src={publicAsset(project.icon)}
                 alt={`${project.name} app icon`}
                 width={96}
                 height={96}
@@ -615,7 +623,7 @@ function ProjectCard({
                 aria-label={`${text.openImage}: ${project.name}`}
               >
                 <Image
-                  src={screenshot}
+                  src={publicAsset(screenshot)}
                   alt={`${project.name} screenshot ${screenshotIndex + 1}`}
                   width={420}
                   height={760}
@@ -774,7 +782,7 @@ function ImageLightbox({
             </div>
             <div className="max-h-[82dvh] overflow-auto rounded-[24px] bg-black">
               <Image
-                src={activeImage.src}
+                src={publicAsset(activeImage.src)}
                 alt={activeImage.alt}
                 width={900}
                 height={1600}
