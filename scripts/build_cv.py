@@ -130,7 +130,7 @@ def add_section_heading(doc, text):
     p.paragraph_format.space_before = Pt(5.5)
     p.paragraph_format.space_after = Pt(2)
     p.paragraph_format.keep_with_next = True
-    add_text(p, text.upper(), size=8.8, bold=True, color=ACCENT)
+    add_text(p, text.upper(), size=9.25, bold=True, color=ACCENT)
     return p
 
 
@@ -138,9 +138,9 @@ def add_bullet(doc, text):
     p = doc.add_paragraph(style="List Bullet")
     p.paragraph_format.left_indent = Inches(0.22)
     p.paragraph_format.first_line_indent = Inches(-0.12)
-    p.paragraph_format.space_after = Pt(1.15)
-    p.paragraph_format.line_spacing = 1.1
-    add_text(p, text, size=8.0, color=INK)
+    p.paragraph_format.space_after = Pt(1.0)
+    p.paragraph_format.line_spacing = 1.08
+    add_text(p, text, size=8.65, color=INK)
 
 
 def add_role(doc, title, company, location, period, bullets):
@@ -148,14 +148,14 @@ def add_role(doc, title, company, location, period, bullets):
     p.paragraph_format.space_before = Pt(5.6)
     p.paragraph_format.space_after = Pt(0.9)
     p.paragraph_format.keep_with_next = True
-    add_text(p, title, size=8.8, bold=True, color=INK)
-    add_text(p, f" | {company}", size=8.8, bold=True, color=ACCENT)
-    add_text(p, f" | {location}", size=8.0, color=MUTED)
+    add_text(p, title, size=9.35, bold=True, color=INK)
+    add_text(p, f" | {company}", size=9.35, bold=True, color=ACCENT)
+    add_text(p, f" | {location}", size=8.45, color=MUTED)
 
     p2 = doc.add_paragraph()
     p2.paragraph_format.space_after = Pt(1.7)
     p2.paragraph_format.keep_with_next = True
-    add_text(p2, period, size=7.7, bold=True, color=MUTED)
+    add_text(p2, period, size=8.25, bold=True, color=MUTED)
 
     for bullet in bullets:
         add_bullet(doc, bullet)
@@ -163,21 +163,21 @@ def add_role(doc, title, company, location, period, bullets):
 
 def add_project(doc, name, role, summary, stack, stores):
     p = doc.add_paragraph()
-    p.paragraph_format.space_before = Pt(3.2)
-    p.paragraph_format.space_after = Pt(0.9)
+    p.paragraph_format.space_before = Pt(2.8)
+    p.paragraph_format.space_after = Pt(0.75)
     p.paragraph_format.keep_with_next = True
-    add_text(p, name, size=8.25, bold=True, color=INK)
-    add_text(p, f" | {role}", size=8.0, bold=True, color=ACCENT)
+    add_text(p, name, size=8.85, bold=True, color=INK)
+    add_text(p, f" | {role}", size=8.6, bold=True, color=ACCENT)
 
     p2 = doc.add_paragraph()
-    p2.paragraph_format.space_after = Pt(1.0)
-    p2.paragraph_format.line_spacing = 1.07
-    add_text(p2, summary, size=7.65, color=INK)
+    p2.paragraph_format.space_after = Pt(0.75)
+    p2.paragraph_format.line_spacing = 1.05
+    add_text(p2, summary, size=8.2, color=INK)
 
     p3 = doc.add_paragraph()
-    p3.paragraph_format.space_after = Pt(2.0)
-    add_text(p3, f"Stack: {stack}", size=7.35, bold=True, color=MUTED)
-    add_text(p3, f" | Stores: {stores}", size=7.35, color=MUTED)
+    p3.paragraph_format.space_after = Pt(1.4)
+    add_text(p3, f"Stack: {stack}", size=7.9, bold=True, color=MUTED)
+    add_text(p3, f" | Stores: {stores}", size=7.9, color=MUTED)
 
 
 def build():
