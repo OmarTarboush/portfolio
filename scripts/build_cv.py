@@ -163,19 +163,19 @@ def add_role(doc, title, company, location, period, bullets):
 
 def add_project(doc, name, role, summary, stack, stores):
     p = doc.add_paragraph()
-    p.paragraph_format.space_before = Pt(1.2)
-    p.paragraph_format.space_after = Pt(0.5)
+    p.paragraph_format.space_before = Pt(3.2)
+    p.paragraph_format.space_after = Pt(0.9)
     p.paragraph_format.keep_with_next = True
     add_text(p, name, size=8.25, bold=True, color=INK)
     add_text(p, f" | {role}", size=8.0, bold=True, color=ACCENT)
 
     p2 = doc.add_paragraph()
-    p2.paragraph_format.space_after = Pt(0.3)
-    p2.paragraph_format.line_spacing = 1.03
+    p2.paragraph_format.space_after = Pt(1.0)
+    p2.paragraph_format.line_spacing = 1.07
     add_text(p2, summary, size=7.65, color=INK)
 
     p3 = doc.add_paragraph()
-    p3.paragraph_format.space_after = Pt(0.7)
+    p3.paragraph_format.space_after = Pt(2.0)
     add_text(p3, f"Stack: {stack}", size=7.35, bold=True, color=MUTED)
     add_text(p3, f" | Stores: {stores}", size=7.35, color=MUTED)
 
