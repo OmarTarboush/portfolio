@@ -11,6 +11,8 @@ from docx.shared import Inches, Pt, RGBColor
 OUTPUT = "public/Omar_Tarboush_CV.docx"
 PORTFOLIO_URL = "https://omartarboush.github.io/portfolio/"
 PORTFOLIO_LABEL = "omartarboush/portfolio"
+LINKEDIN_URL = "https://sy.linkedin.com/in/omar-tarboush"
+LINKEDIN_LABEL = "Omar Tarboush"
 
 INK = RGBColor(17, 24, 39)
 MUTED = RGBColor(82, 92, 108)
@@ -221,11 +223,13 @@ def build():
     contact.paragraph_format.space_after = Pt(2.5)
     add_text(
         contact,
-        "Damascus, Syria | +963 941 717 409 | omartarboush191@gmail.com | LinkedIn: Omar Tarboush | Portfolio: ",
+        "Damascus, Syria | +963 941 717 409 | omartarboush191@gmail.com | LinkedIn: ",
         size=7.6,
         bold=True,
         color=MUTED,
     )
+    add_hyperlink(contact, LINKEDIN_LABEL, LINKEDIN_URL, size=7.6, bold=True)
+    add_text(contact, " | Portfolio: ", size=7.6, bold=True, color=MUTED)
     add_hyperlink(contact, PORTFOLIO_LABEL, PORTFOLIO_URL, size=7.6, bold=True)
 
     top = doc.add_table(rows=1, cols=2)

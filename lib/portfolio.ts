@@ -40,6 +40,7 @@ export const profile = {
   email: "omartarboush191@gmail.com",
   phone: "+963 941 717 409",
   linkedin: "Omar Tarboush",
+  linkedinUrl: "https://sy.linkedin.com/in/omar-tarboush",
   portfolio: "https://omartarboush.github.io/portfolio/",
   location: {
     en: "Damascus, Syria",

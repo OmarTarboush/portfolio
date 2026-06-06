@@ -412,7 +412,7 @@ export default function HomePage() {
                 <ContactRow label={text.location} value={profile.location[locale]} />
                 <ContactRow label={text.education} value={profile.education[locale]} />
                 <ContactRow label={text.languages} value={profile.languages[locale]} />
-                <ContactRow label="LinkedIn" value={profile.linkedin} />
+                <ContactRow label="LinkedIn" value={profile.linkedin} href={profile.linkedinUrl} />
               </dl>
             </Reveal>
           </div>
