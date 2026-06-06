@@ -138,22 +138,22 @@ def add_bullet(doc, text):
     p = doc.add_paragraph(style="List Bullet")
     p.paragraph_format.left_indent = Inches(0.22)
     p.paragraph_format.first_line_indent = Inches(-0.12)
-    p.paragraph_format.space_after = Pt(0.4)
-    p.paragraph_format.line_spacing = 1.05
+    p.paragraph_format.space_after = Pt(1.15)
+    p.paragraph_format.line_spacing = 1.1
     add_text(p, text, size=8.0, color=INK)
 
 
 def add_role(doc, title, company, location, period, bullets):
     p = doc.add_paragraph()
-    p.paragraph_format.space_before = Pt(2.5)
-    p.paragraph_format.space_after = Pt(0)
+    p.paragraph_format.space_before = Pt(5.6)
+    p.paragraph_format.space_after = Pt(0.9)
     p.paragraph_format.keep_with_next = True
     add_text(p, title, size=8.8, bold=True, color=INK)
     add_text(p, f" | {company}", size=8.8, bold=True, color=ACCENT)
     add_text(p, f" | {location}", size=8.0, color=MUTED)
 
     p2 = doc.add_paragraph()
-    p2.paragraph_format.space_after = Pt(0.5)
+    p2.paragraph_format.space_after = Pt(1.7)
     p2.paragraph_format.keep_with_next = True
     add_text(p2, period, size=7.7, bold=True, color=MUTED)
 
