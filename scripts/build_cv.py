@@ -374,15 +374,6 @@ def build():
         "Play Store, App Store",
     )
 
-    footer = section.footer.paragraphs[0]
-    footer.alignment = WD_ALIGN_PARAGRAPH.CENTER
-    add_text(
-        footer,
-        f"Omar Tarboush | Flutter Mobile App Developer | omartarboush191@gmail.com | Portfolio: {PORTFOLIO_LABEL}",
-        size=7.2,
-        color=MUTED,
-    )
-
     doc.save(OUTPUT)
 
 
