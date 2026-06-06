@@ -2,9 +2,7 @@
 
 Personal portfolio website for Omar Tarboush, AI Engineer & Mobile Developer.
 
-## Live Site
-
-[omartarboush/portfolio](https://omartarboush.github.io/portfolio/)
+## Live Site [omartarboush/portfolio](https://omartarboush.github.io/portfolio/)
 
 ## About
 

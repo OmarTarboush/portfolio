@@ -10,6 +10,7 @@ from docx.shared import Inches, Pt, RGBColor
 
 OUTPUT = "public/Omar_Tarboush_CV.docx"
 PORTFOLIO_URL = "https://omartarboush.github.io/portfolio/"
+PORTFOLIO_LABEL = "omartarboush/portfolio"
 
 INK = RGBColor(17, 24, 39)
 MUTED = RGBColor(82, 92, 108)
@@ -225,7 +226,7 @@ def build():
         bold=True,
         color=MUTED,
     )
-    add_hyperlink(contact, PORTFOLIO_URL, PORTFOLIO_URL, size=7.6, bold=True)
+    add_hyperlink(contact, PORTFOLIO_LABEL, PORTFOLIO_URL, size=7.6, bold=True)
 
     top = doc.add_table(rows=1, cols=2)
     set_table_width(top, [4.85, 2.28])
@@ -377,7 +378,7 @@ def build():
     footer.alignment = WD_ALIGN_PARAGRAPH.CENTER
     add_text(
         footer,
-        f"Omar Tarboush | Flutter Mobile App Developer | omartarboush191@gmail.com | {PORTFOLIO_URL}",
+        f"Omar Tarboush | Flutter Mobile App Developer | omartarboush191@gmail.com | Portfolio: {PORTFOLIO_LABEL}",
         size=7.2,
         color=MUTED,
     )
