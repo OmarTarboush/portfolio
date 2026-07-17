@@ -26,6 +26,7 @@ type ActiveImage = {
   src: string;
   alt: string;
   project: string;
+  wide?: boolean;
 };
 
 const copy = {
@@ -47,16 +48,17 @@ const copy = {
     contact: "Contact",
     downloadCv: "Download CV",
     selectedWork: "Selected applications",
-    selectedWorkTitle: "Published apps with screens people can inspect.",
+    selectedWorkTitle: "Production apps and web work with screens people can inspect.",
     selectedWorkText:
       "Every project keeps the product story, store links, and screenshots close together so recruiters and clients can judge the work quickly.",
     openImage: "Open image",
     playStore: "Play Store",
     appStore: "App Store",
+    website: "Visit Website",
     roleSection: "Role coverage",
-    roleTitle: "More than UI work: delivery, systems, security, APIs, testing, and coordination.",
+    roleTitle: "More than UI work: delivery, systems, security, APIs, Patrol testing, and coordination.",
     roleText:
-      "The work spans Flutter architecture, Firebase, REST/GraphQL, maps, deep links, notifications, secure access, legacy codebases, and release-ready delivery.",
+      "The work spans Flutter architecture, Firebase, REST/GraphQL, maps, deep links, notifications, secure access, Patrol automation tests, legacy codebases, and release-ready delivery.",
     experience: "Experience",
     experienceTitle: "Production roles across UAE, Saudi Arabia, and Syria.",
     skills: "Technical system",
@@ -92,16 +94,17 @@ const copy = {
     contact: "تواصل",
     downloadCv: "تحميل السيرة",
     selectedWork: "التطبيقات المختارة",
-    selectedWorkTitle: "تطبيقات منشورة يمكن فحص شاشاتها.",
+    selectedWorkTitle: "تطبيقات وأعمال ويب منشورة يمكن فحص شاشاتها.",
     selectedWorkText:
       "كل مشروع يجمع قصة المنتج وروابط المتاجر والصور في مكان واحد حتى يتم تقييم العمل بسرعة.",
     openImage: "فتح الصورة",
     playStore: "Play Store",
     appStore: "App Store",
+    website: "زيارة الموقع",
     roleSection: "تغطية الأدوار",
-    roleTitle: "أكثر من واجهات: تسليم، أنظمة، حماية، APIs، اختبارات، وتنسيق.",
+    roleTitle: "أكثر من واجهات: تسليم، أنظمة، حماية، APIs، اختبارات Patrol، وتنسيق.",
     roleText:
-      "العمل يغطي Flutter architecture وFirebase وREST/GraphQL والخرائط والروابط العميقة والتنبيهات والوصول الآمن والكود القديم والتسليم الجاهز للإطلاق.",
+      "العمل يغطي Flutter architecture وFirebase وREST/GraphQL والخرائط والروابط العميقة والتنبيهات والوصول الآمن واختبارات Patrol الآلية والكود القديم والتسليم الجاهز للإطلاق.",
     experience: "الخبرة",
     experienceTitle: "أدوار إنتاجية ضمن الإمارات والسعودية وسوريا.",
     skills: "النظام التقني",
@@ -276,15 +279,17 @@ export default function HomePage() {
             </Reveal>
 
             <div className="mt-12 grid gap-8">
-              {projects.map((project) => (
-                <ProjectCard
-                  key={project.name}
-                  project={project}
-                  locale={locale}
-                  text={text}
-                  onOpenImage={setActiveImage}
-                />
-              ))}
+              {projects
+                .filter((project) => !project.hidden)
+                .map((project) => (
+                  <ProjectCard
+                    key={project.name}
+                    project={project}
+                    locale={locale}
+                    text={text}
+                    onOpenImage={setActiveImage}
+                  />
+                ))}
             </div>
           </div>
         </section>
@@ -559,7 +564,13 @@ function ProjectCard({
   return (
     <Reveal y={36}>
       <article className="overflow-hidden rounded-[32px] border border-border bg-surface/88 shadow-[0_42px_150px_-115px_rgba(0,0,0,0.86)]">
-        <div className="grid gap-8 p-5 md:p-8 lg:grid-cols-[0.72fr_1.28fr] lg:gap-10">
+        <div
+          className={`grid gap-8 p-5 md:p-8 ${
+            project.screenshots.length > 0
+              ? "lg:grid-cols-[0.72fr_1.28fr] lg:gap-10"
+              : ""
+          }`}
+        >
           <div className="flex min-w-0 flex-col">
             <div className="flex items-start gap-4">
               <Image
@@ -594,47 +605,71 @@ function ProjectCard({
               {project.appStore && (
                 <StoreLink href={project.appStore} label={text.appStore} />
               )}
+              {project.website && (
+                <StoreLink href={project.website} label={text.website} />
+              )}
             </div>
           </div>
 
-          <div className="grid grid-cols-3 gap-2 sm:gap-4">
-            {project.screenshots.map((screenshot, screenshotIndex) => (
-              <motion.button
-                key={screenshot}
-                type="button"
-                onClick={() =>
-                  onOpenImage({
-                    src: screenshot,
-                    alt: `${project.name} screenshot ${screenshotIndex + 1}`,
-                    project: project.name,
-                  })
-                }
-                className={`group relative min-h-[180px] overflow-hidden rounded-[18px] border border-border bg-background p-1.5 text-left transition duration-300 hover:-translate-y-2 hover:border-accent focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-accent sm:min-h-[390px] sm:rounded-[28px] sm:p-3 ${
-                  screenshotIndex === 1
-                    ? "sm:mt-8"
-                    : screenshotIndex === 2
-                      ? "sm:mt-16"
-                      : ""
-                }`}
-                initial={{ opacity: 0, y: 28, rotate: screenshotIndex - 1 }}
-                whileInView={{ opacity: 1, y: 0, rotate: 0 }}
-                viewport={{ once: true, margin: "-80px" }}
-                transition={{ duration: 0.58, delay: screenshotIndex * 0.08 }}
-                aria-label={`${text.openImage}: ${project.name}`}
-              >
-                <Image
-                  src={publicAsset(screenshot)}
-                  alt={`${project.name} screenshot ${screenshotIndex + 1}`}
-                  width={420}
-                  height={760}
-                  className="h-full max-h-[250px] w-full rounded-[14px] object-cover object-top sm:max-h-[620px] sm:rounded-[20px]"
-                />
-                <span className="absolute inset-x-2 bottom-2 translate-y-3 rounded-full bg-background/92 px-2 py-2 text-center text-[10px] font-black opacity-0 shadow-xl transition duration-300 group-hover:translate-y-0 group-hover:opacity-100 sm:inset-x-6 sm:bottom-6 sm:px-4 sm:py-3 sm:text-xs">
-                  {text.openImage}
-                </span>
-              </motion.button>
-            ))}
-          </div>
+          {project.screenshots.length > 0 && (
+            <div
+              className={
+                project.web
+                  ? "grid content-start gap-3 sm:gap-5"
+                  : "grid grid-cols-3 gap-2 sm:gap-4"
+              }
+            >
+              {project.screenshots.map((screenshot, screenshotIndex) => (
+                <motion.button
+                  key={screenshot}
+                  type="button"
+                  onClick={() =>
+                    onOpenImage({
+                      src: screenshot,
+                      alt: `${project.name} screenshot ${screenshotIndex + 1}`,
+                      project: project.name,
+                      wide: project.web,
+                    })
+                  }
+                  className={`group relative overflow-hidden rounded-[18px] border border-border bg-background p-1.5 text-left transition duration-300 hover:-translate-y-2 hover:border-accent focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-accent ${
+                    project.web
+                      ? "sm:rounded-[24px] sm:p-2.5"
+                      : `min-h-[180px] sm:min-h-[390px] sm:rounded-[28px] sm:p-3 ${
+                          screenshotIndex === 1
+                            ? "sm:mt-8"
+                            : screenshotIndex === 2
+                              ? "sm:mt-16"
+                              : ""
+                        }`
+                  }`}
+                  initial={{
+                    opacity: 0,
+                    y: 28,
+                    rotate: project.web ? 0 : screenshotIndex - 1,
+                  }}
+                  whileInView={{ opacity: 1, y: 0, rotate: 0 }}
+                  viewport={{ once: true, margin: "-80px" }}
+                  transition={{ duration: 0.58, delay: screenshotIndex * 0.08 }}
+                  aria-label={`${text.openImage}: ${project.name}`}
+                >
+                  <Image
+                    src={publicAsset(screenshot)}
+                    alt={`${project.name} screenshot ${screenshotIndex + 1}`}
+                    width={project.web ? 1440 : 420}
+                    height={project.web ? 900 : 760}
+                    className={
+                      project.web
+                        ? "w-full rounded-[14px] object-cover object-top sm:rounded-[18px]"
+                        : "h-full max-h-[250px] w-full rounded-[14px] object-contain object-top sm:max-h-[620px] sm:rounded-[20px]"
+                    }
+                  />
+                  <span className="absolute inset-x-2 bottom-2 translate-y-3 rounded-full bg-background/92 px-2 py-2 text-center text-[10px] font-black opacity-0 shadow-xl transition duration-300 group-hover:translate-y-0 group-hover:opacity-100 sm:inset-x-6 sm:bottom-6 sm:px-4 sm:py-3 sm:text-xs">
+                    {text.openImage}
+                  </span>
+                </motion.button>
+              ))}
+            </div>
+          )}
         </div>
       </article>
     </Reveal>
@@ -784,9 +819,11 @@ function ImageLightbox({
               <Image
                 src={publicAsset(activeImage.src)}
                 alt={activeImage.alt}
-                width={900}
-                height={1600}
-                className="mx-auto h-auto w-full max-w-[560px] object-contain"
+                width={activeImage.wide ? 1600 : 900}
+                height={activeImage.wide ? 1000 : 1600}
+                className={`mx-auto h-auto w-full object-contain ${
+                  activeImage.wide ? "" : "max-w-[560px]"
+                }`}
               />
             </div>
           </motion.div>

@@ -3,13 +3,13 @@ import "./globals.css";
 
 export const metadata: Metadata = {
   title: {
-    default: "Omar Tarboush - Flutter Mobile App Developer",
+    default: "Omar Tarboush - Flutter Mobile & Web Developer",
     template: "%s - Omar Tarboush",
   },
   description:
-    "Flutter mobile app developer and AI developer with production apps across Firebase, GetX, Riverpod, REST, GraphQL, maps, and secure workflows.",
+    "Flutter mobile and web developer and AI graduate with production apps across Firebase, GetX, Riverpod, REST, GraphQL, maps, and secure workflows.",
   openGraph: {
-    title: "Omar Tarboush - Flutter Mobile App Developer",
+    title: "Omar Tarboush - Flutter Mobile & Web Developer",
     description:
       "Production mobile apps, secure workflows, Firebase systems, and polished Flutter interfaces.",
   },

@@ -2,6 +2,8 @@
 node_modules/
 out/
 dist/
+.venv/
+.claude/
 .DS_Store
 *.log
 .env

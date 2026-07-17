@@ -12,6 +12,9 @@ export type PortfolioProject = {
   screenshots: string[];
   playStore?: string;
   appStore?: string;
+  website?: string;
+  web?: boolean;
+  hidden?: boolean;
 };
 
 export type ExperienceItem = {
@@ -30,8 +33,8 @@ export type SkillGroup = {
 export const profile = {
   name: "Omar Tarboush",
   title: {
-    en: "Flutter Mobile App Developer",
-    ar: "مطور تطبيقات Flutter",
+    en: "Flutter Mobile & Web Developer",
+    ar: "مطور تطبيقات Flutter وويب",
   },
   secondaryTitle: {
     en: "AI Graduate",
@@ -55,8 +58,8 @@ export const profile = {
     ar: "العربية لغة أم، والإنجليزية جيدة",
   },
   summary: {
-    en: "Flutter developer and AI graduate with 4+ years of production mobile app experience and 12+ applications across the UAE, Saudi Arabia, and Syria. Strong in Flutter, Firebase, GetX, Riverpod, REST/GraphQL APIs, maps, deep linking, notifications, secure access, and automated testing.",
-    ar: "مطور Flutter وخريج ذكاء اصطناعي بخبرة 4+ سنوات في تطبيقات الموبايل الإنتاجية وأكثر من 12 تطبيقاً ضمن الإمارات والسعودية وسوريا. أعمل على Flutter وFirebase وGetX وRiverpod وREST/GraphQL والخرائط والتنبيهات والروابط العميقة والحماية والاختبارات.",
+    en: "Flutter developer and AI graduate with 4+ years of production mobile app experience and 12+ applications across the UAE, Saudi Arabia, and Syria. Strong in Flutter, Firebase, GetX, Riverpod, BLoC, REST/GraphQL APIs, maps, deep linking, notifications, secure access, and Patrol automated app testing.",
+    ar: "مطور Flutter وخريج ذكاء اصطناعي بخبرة 4+ سنوات في تطبيقات الموبايل الإنتاجية وأكثر من 12 تطبيقاً ضمن الإمارات والسعودية وسوريا. أعمل على Flutter وFirebase وGetX وRiverpod وBLoC وREST/GraphQL والخرائط والتنبيهات والروابط العميقة والحماية واختبارات التطبيقات الآلية باستخدام Patrol.",
   },
 };
 
@@ -254,6 +257,49 @@ export const projects: PortfolioProject[] = [
       "https://play.google.com/store/apps/details?id=com.wonderbeauties.app",
     appStore: "https://apps.apple.com/sa/app/wonder-beauties/id6472045044",
   },
+  {
+    name: "Jeebtak",
+    role: {
+      en: "Money Management App",
+      ar: "تطبيق إدارة الأموال",
+    },
+    description: {
+      en: "Offline-first money management product with multi-currency wallets, receipts, debt tracking, QR flows, charts, and PDF/Excel reports on top of an encrypted local database.",
+      ar: "منتج لإدارة الأموال يعمل دون اتصال مع محافظ متعددة العملات وإيصالات وتتبع ديون وQR ورسوم بيانية وتقارير PDF/Excel فوق قاعدة بيانات محلية مشفرة.",
+    },
+    impact: {
+      en: "Own pre-launch product built for cash-heavy markets, with SQLCipher encryption, PIN and biometric access, and secure token flows.",
+      ar: "منتج خاص قيد الإطلاق موجه للأسواق النقدية، مع تشفير SQLCipher ودخول PIN والبصمة وتدفقات وصول آمنة.",
+    },
+    stack: ["Flutter", "GetX", "Drift + SQLCipher", "Firebase"],
+    icon: "/uploads/projects/jeebtak-icon.svg",
+    screenshots: [
+      "/uploads/projects/jeebtak-1.png",
+      "/uploads/projects/jeebtak-2.png",
+      "/uploads/projects/jeebtak-3.png",
+    ],
+    hidden: true,
+  },
+  {
+    name: "Ghassan Ahmad",
+    role: {
+      en: "Photographer Website",
+      ar: "موقع مصور فوتوغرافي",
+    },
+    description: {
+      en: "Bilingual Arabic/English website for a Damascus photographer with seasonal offers, work galleries, WhatsApp booking, localized SEO, and an admin dashboard for content and image management.",
+      ar: "موقع ثنائي اللغة لمصور في دمشق مع عروض موسمية ومعارض أعمال وحجز عبر WhatsApp وSEO مترجم ولوحة إدارة للمحتوى والصور.",
+    },
+    impact: {
+      en: "Full web delivery: public landing site plus a database-backed admin panel with uploads and per-locale SEO control.",
+      ar: "تسليم ويب كامل: موقع عام مع لوحة إدارة مدعومة بقاعدة بيانات ورفع صور وتحكم SEO لكل لغة.",
+    },
+    stack: ["Next.js", "TypeScript", "Prisma", "i18n"],
+    icon: "/uploads/projects/ghassan-ahmad-icon.jpg",
+    screenshots: ["/uploads/projects/ghassan-ahmad-1.png"],
+    website: "https://ghassanahmadevents.com/",
+    web: true,
+  },
 ];
 
 export const experience: ExperienceItem[] = [
@@ -278,8 +324,30 @@ export const experience: ExperienceItem[] = [
         ar: "تنفيذ Riverpod لإدارة الحالة وتحسين استعلامات البيانات لدعم أداء أقوى للتطبيق.",
       },
       {
-        en: "Integrated Firebase Auth, Firestore, Analytics, third-party REST APIs, widget tests, and integration tests.",
-        ar: "دمج Firebase Auth وFirestore وAnalytics وREST APIs خارجية واختبارات widgets واختبارات تكامل.",
+        en: "Integrated Firebase Auth, Firestore, Analytics, third-party REST APIs, Patrol automated app tests, widget tests, and integration tests.",
+        ar: "دمج Firebase Auth وFirestore وAnalytics وREST APIs خارجية واختبارات تطبيقات آلية باستخدام Patrol واختبارات widgets واختبارات تكامل.",
+      },
+    ],
+  },
+  {
+    company: "Freelance",
+    location: {
+      en: "Remote",
+      ar: "عن بُعد",
+    },
+    role: {
+      en: "Freelance Web Developer",
+      ar: "مطور ويب مستقل",
+    },
+    period: "2025 - Present",
+    points: [
+      {
+        en: "Designed and delivered a bilingual Arabic/English photographer website (Ghassan Ahmad) with seasonal offers, work galleries, WhatsApp booking, and localized SEO.",
+        ar: "تصميم وتسليم موقع ثنائي اللغة لمصور (غسان أحمد) مع عروض موسمية ومعارض أعمال وحجز عبر WhatsApp وSEO مترجم.",
+      },
+      {
+        en: "Built the full web stack with Next.js, TypeScript, and Prisma, including a database-backed admin dashboard with image uploads and per-locale SEO control.",
+        ar: "بناء حزمة ويب كاملة باستخدام Next.js وTypeScript وPrisma تشمل لوحة إدارة مدعومة بقاعدة بيانات ورفع صور وتحكم SEO لكل لغة.",
       },
     ],
   },
@@ -304,8 +372,8 @@ export const experience: ExperienceItem[] = [
         ar: "قيادة مشاريع خاصة وتخطيط الجداول والإشراف على أعمال التسليم وصيانة قواعد كود قديمة واسعة.",
       },
       {
-        en: "Built GetX architectures, SQL views, Firebase Messaging, deep links, GraphQL, REST APIs, and Patrol tests.",
-        ar: "بناء معماريات GetX وSQL views وFirebase Messaging والروابط العميقة وGraphQL وREST APIs واختبارات Patrol.",
+        en: "Built GetX architectures, SQL views, Firebase Messaging, deep links, GraphQL, REST APIs, and Patrol end-to-end automation tests.",
+        ar: "بناء معماريات GetX وSQL views وFirebase Messaging والروابط العميقة وGraphQL وREST APIs واختبارات Patrol الآلية من طرف إلى طرف.",
       },
     ],
   },
@@ -361,7 +429,14 @@ export const skillGroups: SkillGroup[] = [
       en: "Mobile",
       ar: "الموبايل",
     },
-    items: ["Flutter", "Dart", "GetX", "Riverpod", "Patrol", "Mockito", "Widget tests"],
+    items: ["Flutter", "Dart", "GetX", "Riverpod", "BLoC", "Patrol tests", "Mockito", "Widget tests"],
+  },
+  {
+    title: {
+      en: "Web",
+      ar: "الويب",
+    },
+    items: ["Next.js", "TypeScript", "React", "Prisma", "Tailwind CSS", "i18n", "SEO"],
   },
   {
     title: {
@@ -392,7 +467,9 @@ export const skillGroups: SkillGroup[] = [
       ar: "الجودة والتسليم",
     },
     items: [
+      "Patrol automated app testing",
       "Testing",
+      "Integration tests",
       "Debugging",
       "Git",
       "GitHub",

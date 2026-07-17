@@ -1,6 +1,5 @@
 from docx import Document
 from docx.enum.section import WD_SECTION_START
-from docx.enum.table import WD_CELL_VERTICAL_ALIGNMENT, WD_TABLE_ALIGNMENT
 from docx.enum.text import WD_ALIGN_PARAGRAPH
 from docx.oxml import OxmlElement
 from docx.oxml.ns import qn
@@ -17,9 +16,6 @@ LINKEDIN_LABEL = "Omar Tarboush"
 INK = RGBColor(17, 24, 39)
 MUTED = RGBColor(82, 92, 108)
 ACCENT = RGBColor(11, 117, 209)
-BORDER = "D9E0EA"
-FILL = "F5F8FC"
-ACCENT_FILL = "EAF4FF"
 
 
 def set_run(run, size=8.7, bold=False, color=INK):
@@ -73,66 +69,29 @@ def add_hyperlink(paragraph, text, url, size=8.7, bold=False):
     paragraph._p.append(hyperlink)
 
 
-def set_cell_shading(cell, fill):
-    tc_pr = cell._tc.get_or_add_tcPr()
-    shd = OxmlElement("w:shd")
-    shd.set(qn("w:fill"), fill)
-    tc_pr.append(shd)
-
-
-def set_cell_borders(cell, color=BORDER):
-    tc_pr = cell._tc.get_or_add_tcPr()
-    borders = tc_pr.first_child_found_in("w:tcBorders")
-    if borders is None:
-        borders = OxmlElement("w:tcBorders")
-        tc_pr.append(borders)
-    for edge in ("top", "left", "bottom", "right"):
-        element = borders.find(qn(f"w:{edge}"))
-        if element is None:
-            element = OxmlElement(f"w:{edge}")
-            borders.append(element)
-        element.set(qn("w:val"), "single")
-        element.set(qn("w:sz"), "4")
-        element.set(qn("w:color"), color)
-
-
-def set_cell_margins(cell, top=70, start=100, bottom=70, end=100):
-    tc_pr = cell._tc.get_or_add_tcPr()
-    tc_mar = tc_pr.first_child_found_in("w:tcMar")
-    if tc_mar is None:
-        tc_mar = OxmlElement("w:tcMar")
-        tc_pr.append(tc_mar)
-    for margin, value in {
-        "top": top,
-        "start": start,
-        "bottom": bottom,
-        "end": end,
-    }.items():
-        node = tc_mar.find(qn(f"w:{margin}"))
-        if node is None:
-            node = OxmlElement(f"w:{margin}")
-            tc_mar.append(node)
-        node.set(qn("w:w"), str(value))
-        node.set(qn("w:type"), "dxa")
-
-
-def set_table_width(table, widths):
-    table.alignment = WD_TABLE_ALIGNMENT.CENTER
-    table.autofit = False
-    for row in table.rows:
-        for cell, width in zip(row.cells, widths):
-            cell.width = Inches(width)
-            cell.vertical_alignment = WD_CELL_VERTICAL_ALIGNMENT.CENTER
-            set_cell_borders(cell)
-            set_cell_margins(cell)
-
-
 def add_section_heading(doc, text):
     p = doc.add_paragraph()
     p.paragraph_format.space_before = Pt(5.5)
     p.paragraph_format.space_after = Pt(2)
     p.paragraph_format.keep_with_next = True
     add_text(p, text.upper(), size=9.25, bold=True, color=ACCENT)
+    return p
+
+
+def add_compact_paragraph(doc, text, size=8.15):
+    p = doc.add_paragraph()
+    p.paragraph_format.space_after = Pt(1.2)
+    p.paragraph_format.line_spacing = 1.05
+    add_text(p, text, size=size, color=INK)
+    return p
+
+
+def add_labeled_line(doc, label, value, size=8.0):
+    p = doc.add_paragraph()
+    p.paragraph_format.space_after = Pt(1.1)
+    p.paragraph_format.line_spacing = 1.05
+    add_text(p, f"{label}: ", size=size, bold=True, color=ACCENT)
+    add_text(p, value, size=size, color=INK)
     return p
 
 
@@ -163,7 +122,7 @@ def add_role(doc, title, company, location, period, bullets):
         add_bullet(doc, bullet)
 
 
-def add_project(doc, name, role, summary, stack, stores):
+def add_project(doc, name, role, summary, stack, links, links_label="Stores"):
     p = doc.add_paragraph()
     p.paragraph_format.space_before = Pt(2.8)
     p.paragraph_format.space_after = Pt(0.75)
@@ -179,7 +138,7 @@ def add_project(doc, name, role, summary, stack, stores):
     p3 = doc.add_paragraph()
     p3.paragraph_format.space_after = Pt(1.4)
     add_text(p3, f"Stack: {stack}", size=7.9, bold=True, color=MUTED)
-    add_text(p3, f" | Stores: {stores}", size=7.9, color=MUTED)
+    add_text(p3, f" | {links_label}: {links}", size=7.9, color=MUTED)
 
 
 def build():
@@ -212,7 +171,7 @@ def build():
     subtitle.paragraph_format.space_after = Pt(1)
     add_text(
         subtitle,
-        "Flutter Mobile App Developer | AI Graduate",
+        "Flutter Mobile & Web Developer | AI Graduate",
         size=9.8,
         bold=True,
         color=ACCENT,
@@ -232,53 +191,27 @@ def build():
     add_text(contact, " | Portfolio: ", size=7.6, bold=True, color=MUTED)
     add_hyperlink(contact, PORTFOLIO_LABEL, PORTFOLIO_URL, size=7.6, bold=True)
 
-    top = doc.add_table(rows=1, cols=2)
-    set_table_width(top, [4.85, 2.28])
-    set_cell_shading(top.rows[0].cells[0], ACCENT_FILL)
-    set_cell_shading(top.rows[0].cells[1], FILL)
-
-    p = top.rows[0].cells[0].paragraphs[0]
-    p.paragraph_format.space_after = Pt(0)
-    add_text(p, "Professional Summary", size=8.0, bold=True, color=ACCENT)
-    p2 = top.rows[0].cells[0].add_paragraph()
-    p2.paragraph_format.space_after = Pt(0)
-    p2.paragraph_format.line_spacing = 1.05
-    add_text(
-        p2,
-        "Flutter developer and AI graduate with 4+ years of production mobile app experience and 12+ applications across the UAE, Saudi Arabia, and Syria. Strong in Flutter, Firebase, GetX, Riverpod, REST/GraphQL APIs, Google Maps, deep links, notifications, secure access, and automated testing. Delivered and maintained published apps across communication, food, beauty, task management, and location-based products.",
-        size=8.1,
-        color=INK,
+    add_section_heading(doc, "Professional Summary")
+    add_compact_paragraph(
+        doc,
+        "Flutter developer and AI graduate with 4+ years of production mobile app experience and 12+ applications across the UAE, Saudi Arabia, and Syria. Strong in Flutter, Firebase, GetX, Riverpod, BLoC, REST/GraphQL APIs, Google Maps, deep links, notifications, secure access, and Patrol automated app testing. Delivered and maintained published apps across communication, food, beauty, task management, accounting, and location-based products, plus bilingual web delivery with Next.js.",
+        size=8.05,
     )
 
-    p = top.rows[0].cells[1].paragraphs[0]
-    p.paragraph_format.space_after = Pt(0)
-    add_text(p, "Education & Languages", size=8.0, bold=True, color=ACCENT)
-    p2 = top.rows[0].cells[1].add_paragraph()
-    p2.paragraph_format.space_after = Pt(0)
-    add_text(
-        p2,
-        "BSc Information Technology, AI Major\nArab International University\nArabic native | English good",
-        size=7.9,
-        color=INK,
-    )
+    add_section_heading(doc, "Education & Languages")
+    add_labeled_line(doc, "Education", "BSc Information Technology, AI Major - Arab International University", size=7.9)
+    add_labeled_line(doc, "Languages", "Arabic native | English good", size=7.9)
 
     add_section_heading(doc, "Core Skills")
-    skills = doc.add_table(rows=4, cols=2)
-    set_table_width(skills, [1.5, 5.55])
     skill_rows = [
-        ("Mobile", "Flutter, Dart, GetX, Riverpod, Patrol, Mockito, widget and integration testing"),
+        ("Mobile", "Flutter, Dart, GetX, Riverpod, BLoC, Patrol tests, Mockito, widget and integration testing"),
+        ("Web", "Next.js, TypeScript, React, Prisma, Tailwind CSS, next-intl (i18n), SEO"),
         ("Backend/Data", "Firebase Auth, Firestore, Messaging, Cloud Functions, SQL, stored procedures, views"),
         ("Integrations", "REST APIs, GraphQL APIs, Google Maps, deep linking, push notifications, in-app purchases"),
-        ("Security/Delivery", "PIN access, role-based access, data encryption, cloud backup, caching, Git, GitLab, GitHub"),
+        ("Security/Delivery", "Patrol automated app testing, PIN access, role-based access, data encryption, cloud backup, caching, Git, GitLab, GitHub"),
     ]
-    for row, (label, value) in zip(skills.rows, skill_rows):
-        set_cell_shading(row.cells[0], FILL)
-        p0 = row.cells[0].paragraphs[0]
-        p1 = row.cells[1].paragraphs[0]
-        p0.paragraph_format.space_after = Pt(0)
-        p1.paragraph_format.space_after = Pt(0)
-        add_text(p0, label, size=7.8, bold=True, color=ACCENT)
-        add_text(p1, value, size=7.75, color=INK)
+    for label, value in skill_rows:
+        add_labeled_line(doc, label, value, size=7.75)
 
     add_section_heading(doc, "Work Experience")
     add_role(
@@ -290,7 +223,18 @@ def build():
         [
             "Managed project timelines, delegated development tasks, and coordinated cross-functional delivery.",
             "Implemented Riverpod state management and optimized data queries for stronger app performance.",
-            "Integrated Firebase Auth, Firestore, Analytics, third-party REST APIs, widget tests, and integration tests.",
+            "Integrated Firebase Auth, Firestore, Analytics, third-party REST APIs, Patrol automated app tests, widget tests, and integration tests.",
+        ],
+    )
+    add_role(
+        doc,
+        "Freelance Web Developer",
+        "Freelance",
+        "Remote",
+        "2025 - Present",
+        [
+            "Designed and delivered a bilingual Arabic/English photographer website (Ghassan Ahmad) with seasonal offers, work galleries, WhatsApp booking, and localized SEO.",
+            "Built the full web stack with Next.js, TypeScript, and Prisma, including a database-backed admin dashboard with image uploads and per-locale SEO control.",
         ],
     )
     add_role(
@@ -302,7 +246,7 @@ def build():
         [
             "Delivered and supported production mobile applications including Aklat24 and Mapy.",
             "Led special projects, planned schedules, supervised delivery work, and maintained large-scale legacy codebases.",
-            "Built GetX architectures, SQL views, Firebase Messaging, deep links, GraphQL, REST APIs, and Patrol tests.",
+            "Built GetX architectures, SQL views, Firebase Messaging, deep links, GraphQL, REST APIs, and Patrol end-to-end automation tests.",
         ],
     )
     add_role(
@@ -328,7 +272,7 @@ def build():
         ],
     )
 
-    add_section_heading(doc, "Selected Applications")
+    add_section_heading(doc, "Selected Projects")
     add_project(
         doc,
         "H1 SMS",
@@ -376,6 +320,25 @@ def build():
         "Beauty consultation and commerce app with pharmacist/doctor consultations, personalized recommendations, and original product discovery.",
         "Flutter, Firebase, E-commerce, Consultations",
         "Play Store, App Store",
+    )
+    # Jeebtak hidden for now — restore by uncommenting this block.
+    # add_project(
+    #     doc,
+    #     "Jeebtak",
+    #     "Shop Accounting App",
+    #     "Offline-first shop accounting product with multi-currency wallets, receipts, debt tracking, QR flows, PDF/Excel reports, SQLCipher-encrypted storage, and PIN/biometric access.",
+    #     "Flutter, GetX, Drift, SQLCipher, Firebase",
+    #     "Pre-launch (Android, iOS)",
+    #     links_label="Status",
+    # )
+    add_project(
+        doc,
+        "Ghassan Ahmad",
+        "Photographer Website",
+        "Bilingual Arabic/English photographer website with seasonal offers, work galleries, WhatsApp booking, localized SEO, and a database-backed admin dashboard with image uploads.",
+        "Next.js, TypeScript, Prisma, i18n",
+        "Web (landing site + admin dashboard)",
+        links_label="Platform",
     )
 
     doc.save(OUTPUT)
